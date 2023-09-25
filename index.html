@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Master 2 THYP : trombinoscope de la promotion 2023 - 2024</title>
+		<title>Médias sociaux</title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 	    <!-- Bootstrap CSS -->
@@ -82,9 +82,8 @@
 	</head>
 <body>
 
-<div class="jumbotron">
-  <h1 class="display-3">Master 2 THYP</h1>
-  <h2>Promotion  2023 - 2024</h2>
+<div class="jumbotron" >
+  <h1>Médias sociaux et la protection des données personnelles</h1>
   <hr class="my-4">
 
   <ul class="nav nav-tabs" id="tabFacet" role="tablist">
@@ -168,7 +167,7 @@ var dataPhoto, dataForm, dataFacet=[], dataDoublons={}
 
     //récupération des données des formulaires google
     //"FormulaireGEN19.csv";//
-    let url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS9B7ZVKLzQXaXObvn61IPom-bKhbEZvomwenGs2uhggv6_UPdK4TQEMzPph2gvX9c2fwuAJIhtvICS/pub?output=csv';            
+    let url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSArT1IoXvWDtV0J9S56b7TNYA6Wdctjg4HeiQMh_l92HaM3LHkPeytY21t5OySb37QmI-qJeDc_Uev/pub?gid=863405160&single=true&output=csv'
     var q = d3.queue()
         .defer(d3.csv, url)
         //.defer(d3.csv, url1)
@@ -185,7 +184,6 @@ var dataPhoto, dataForm, dataFacet=[], dataDoublons={}
             dataForm = data[0];
             let dataEtu = []; 
             
-
             //réorganise les datas
             dataForm.forEach(function(d, j){
                 d.reponses = {'besoins':[],'competences':[],'outils':[]};
