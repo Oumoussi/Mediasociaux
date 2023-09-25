@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travaux des étudiants</title>
+    <link rel="stylesheet" href="css/travaux.css" >
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<h1>Travaux de <span class="rouge" id="etuNom" ></span></h1>    
+<h2>Etudiant AVUN</h2>
+<h3 id='promotion' class="rouge">Promotion 2022-2023</h3>
+<div id="dimensions"></div>
+
+</body>
+<script>
+    let url= new URL(document.location),
+        params = url.searchParams
+        login = params.get('login'),
+        dimensions = ['physiques','acteurs','concepts']; 
+
+    console.log('valeur du paramètre login :'+login);
+    d3.select('#etuNom').html(login);
+
+    let dim = d3.select('#dimensions').selectAll('div').data(dimensions).enter().append('div')
+        .attr('id',d=>'div'+d);
+    dim.append('h4').attr('class',"titreDimension").html(d=>'Dimensions = '+d);
+    dim.append('iframe').attr('title',d=>'Dimensions = '+d)
+        .attr('src',d=>"svg/"+login+'-'+d+'.svg');
+
+</script>
+</html>
