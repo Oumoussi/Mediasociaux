@@ -83,34 +83,35 @@ async function loadData() {
   return { labels, values };
 }
 
-function piechart (fulldata, i, chartId,charts){
+function piechart(fulldata, i, chartId, charts) {
   const labels = [fulldata.labels[i], fulldata.labels[i + 1]];
   let data = [];
   let titles = [];
-  let colors = ['blue','orange','green', 'yellow'];
-  if(i === 2 || i === 3 || i === 22){
+  let colors = ['blue', 'orange', 'green', 'yellow'];
+
+  if (i === 2 || i === 3 || i === 22) {
     switch (i) {
       case 2:
-        colors.push('purple','Gray');
-        titles = ['Facebook','Instagram','X (Twitter)','LinkedIn','Snapchat','Other'];
-        data.push(count(fulldata.values, i).f,count(fulldata.values, i).ins,count(fulldata.values, i).x,
-        count(fulldata.values, i).l, count(fulldata.values, i).sn, count(fulldata.values, i).k);
+        colors.push('purple', 'gray');
+        titles = ['Facebook', 'Instagram', 'X (Twitter)', 'LinkedIn', 'Snapchat', 'Other'];
+        data.push(count(fulldata.values, i).f, count(fulldata.values, i).ins, count(fulldata.values, i).x,
+          count(fulldata.values, i).l, count(fulldata.values, i).sn, count(fulldata.values, i).k);
         break;
       case 3:
-        titles = ['[0h - 2h]','[2h - 5h]','[5h - 8h]','[8h - 12h]'];
-        data.push(count(fulldata.values, i).one,count(fulldata.values, i).two,count(fulldata.values, i).three,
-        count(fulldata.values, i).four);
+        titles = ['[0h - 2h]', '[2h - 5h]', '[5h - 8h]', '[8h - 12h]'];
+        data.push(count(fulldata.values, i).one, count(fulldata.values, i).two, count(fulldata.values, i).three,
+          count(fulldata.values, i).four);
         break;
       case 22:
-        titles = ['Très confiance','Moyennement confiance','Peu confiance','Pas du tout confiance']; 
-        data.push(count(fulldata.values, i).one,count(fulldata.values, i).two,count(fulldata.values, i).three,
-        count(fulldata.values, i).four);
+        titles = ['Très confiance', 'Moyennement confiance', 'Peu confiance', 'Pas du tout confiance'];
+        data.push(count(fulldata.values, i).one, count(fulldata.values, i).two, count(fulldata.values, i).three,
+          count(fulldata.values, i).four);
         break;
       default:
         break;
     }
-    
   }
+
   const chartData = {
     labels: titles,
     datasets: [
@@ -122,82 +123,83 @@ function piechart (fulldata, i, chartId,charts){
       },
     ],
   };
-  const chartConfig ={
+
+  const chartConfig = {
     type: 'pie',
     data: chartData,
   };
+
+  // Create a div element for each chart
+  const chartContainer = d3.select(`#${chartId}`)
+    .append('div')
+    .attr('class', 'chart-container');
+
   // Create a canvas element for each chart
-  const canvas = document.createElement('canvas');
-  canvas.id = `myChart${i / 2}`; 
-  document.getElementById(chartId).appendChild(canvas);
-  
-  charts.push(new Chart(canvas, chartConfig));
-  
-  
-  
+  const canvas = chartContainer
+    .append('canvas')
+    .attr('id', `myChart${i / 2}`);
+
+  // Append the chart container to the charts array
+  charts.push(new Chart(canvas.node(), chartConfig));
 }
 
-function barchart (fulldata, i, chartId,charts){
-    
-    const labels = [fulldata.labels[i], fulldata.labels[i + 1]];
-    let data = [count(fulldata.values, i).i, count(fulldata.values, i).j];
-   
-    let titles = ['Oui','Non'];
-    if(i === 25 || i == 24){
-      
-      data.push(count(fulldata.values, i).k);
-      
-      switch (i) {
-        case 25:
-          titles.push('Peut-être');
-          break;
-        case 24:
-          titles.push('Pas sûr');
-          break;
-        default:
-          break;
-      }
-      
-    }
-    const chartData = {
-      labels: titles,
-      datasets: [
-        {
-          label: labels[0],
-          data,
-          backgroundColor: [
-            'rgba(255, 26, 104, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255, 26, 104, 1)',
-            'rgba(54, 162, 235, 1)',
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-    const chartConfig = {
-      type: 'bar',
-      data: chartData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
+function barchart(fulldata, i, chartId, charts) {
+  const labels = [fulldata.labels[i], fulldata.labels[i + 1]];
+  let data = [count(fulldata.values, i).i, count(fulldata.values, i).j];
+
+  let titles = ['Oui', 'Non'];
+
+  const chartData = {
+    labels: titles,
+    datasets: [
+      {
+        label: labels[0],
+        data,
+        backgroundColor: [
+          'rgba(255, 26, 104, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 26, 104, 1)',
+          'rgba(54, 162, 235, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartConfig = {
+    type: 'bar',
+    data: chartData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
         },
       },
-    };
-    // Create a canvas element for each chart
-    const canvas = document.createElement('canvas');
-    canvas.id = `myChart${i / 2}`; 
-    document.getElementById(chartId).appendChild(canvas);
-    
-    charts.push(new Chart(canvas, chartConfig));
-    
-    
-    
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+    },
+  };
+
+  // Select the existing chart container
+  const container = d3.select(`#${chartId}`);
+
+  // Clear the container before appending the chart
+  container.html('');
+
+  // Create the chart using Chart.js
+  const chartCanvas = container.append('canvas').node();
+  const ctx = chartCanvas.getContext('2d');
+  new Chart(ctx, chartConfig);
+
+  // Store the chart in the charts array
+  charts.push({ chartId, chartConfig });
 }
+
 
 function showbarchart(fulldata,heading){
   let charts = [];
@@ -209,43 +211,32 @@ function showbarchart(fulldata,heading){
       break;
     case "private":
       barchart(fulldata, 4, 'chartContainer1',charts);
-      barchart(fulldata, 5, 'chartContainer1',charts);
+      
       break;
     case "politiques":
       barchart(fulldata, 6, 'chartContainer2',charts);
-      barchart(fulldata, 7, 'chartContainer2',charts);
+     
       break;
     case "connaissance":
       barchart(fulldata, 8, 'chartContainer3',charts);
-      barchart(fulldata, 9, 'chartContainer3',charts);
-      barchart(fulldata, 10, 'chartContainer3',charts);
       break;
     case "security":
       barchart(fulldata, 11, 'chartContainer4',charts);
-      barchart(fulldata, 12, 'chartContainer4',charts);
-      barchart(fulldata, 13, 'chartContainer4',charts);
+      
       break;
     case "protection":
       barchart(fulldata, 14, 'chartContainer5',charts);
-      barchart(fulldata, 15, 'chartContainer5',charts);
-      barchart(fulldata, 16, 'chartContainer5',charts);
+
       break;
     case "supp":
       barchart(fulldata, 17, 'chartContainer6',charts);
-      barchart(fulldata, 19, 'chartContainer6',charts);
       break;
     
     case "autre":
       barchart(fulldata, 18, 'chartContainer7',charts);
-      barchart(fulldata, 20, 'chartContainer7',charts);
-      barchart(fulldata, 21, 'chartContainer7',charts);
+      
       piechart(fulldata, 22, 'chartContainer7',charts);
-      barchart(fulldata, 23, 'chartContainer7',charts);
-      barchart(fulldata, 24, 'chartContainer7',charts);
-      barchart(fulldata, 25, 'chartContainer7',charts);
-      barchart(fulldata, 26, 'chartContainer7',charts);
-      barchart(fulldata, 27, 'chartContainer7',charts);
-      barchart(fulldata, 28, 'chartContainer7',charts);
+     
       break;
     default:
       break;
