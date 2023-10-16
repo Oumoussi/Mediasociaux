@@ -129,17 +129,14 @@ function piechart(fulldata, i, chartId, charts) {
     data: chartData,
   };
 
-  // Create a div element for each chart
   const chartContainer = d3.select(`#${chartId}`)
     .append('div')
     .attr('class', 'chart-container');
 
-  // Create a canvas element for each chart
   const canvas = chartContainer
     .append('canvas')
     .attr('id', `myChart${i / 2}`);
 
-  // Append the chart container to the charts array
   charts.push(new Chart(canvas.node(), chartConfig));
 }
 
@@ -185,18 +182,14 @@ function barchart(fulldata, i, chartId, charts) {
     },
   };
 
-  // Select the existing chart container
   const container = d3.select(`#${chartId}`);
 
-  // Clear the container before appending the chart
   container.html('');
 
-  // Create the chart using Chart.js
   const chartCanvas = container.append('canvas').node();
   const ctx = chartCanvas.getContext('2d');
   new Chart(ctx, chartConfig);
 
-  // Store the chart in the charts array
   charts.push({ chartId, chartConfig });
 }
 
